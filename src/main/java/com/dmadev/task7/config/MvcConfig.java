@@ -16,15 +16,11 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
-import javax.swing.text.html.HTML;
-
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.dmadev.task7")
 public class MvcConfig implements WebMvcConfigurer {
-
     private final ApplicationContext applicationContext;
-
 
     @Autowired
     public MvcConfig(ApplicationContext applicationContext, Environment env) {
