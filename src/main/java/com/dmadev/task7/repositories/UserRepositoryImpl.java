@@ -3,6 +3,7 @@ package com.dmadev.task7.repositories;
 import com.dmadev.task7.models.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.hibernate.annotations.processing.SQL;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,26 +16,37 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 
     @Override
     public void createUser(User user) {
-
+        entityManager.persist(user);
+        entityManager.flush();
     }
 
+//    Метод flush() в JPA принудительно синхронизирует изменения в объектах с базой данных.
+//    Все накопленные изменения в контексте управляемых сущностей будут отправлены в базу данных,
+//    что может привести к выполнению SQL-запросов для обновления, вставки или удаления записей.
     @Override
     public void updateUser(User user) {
-
+    entityManager.merge(user);
+    entityManager.flush();
     }
 
     @Override
     public User readUser(int id) {
-        return null;
+        return entityManager.find(User.class,id);
     }
 
     @Override
-    public User deleteUser(int id) {
-        return null;
+    public User deleteUser(int id) throws NullPointerException {
+        User user = readUser(id);
+        if(null==user){
+            throw new NullPointerException("User not found");
+        }
+        entityManager.remove(user);
+        entityManager.flush();
+        return user;
     }
 }
