@@ -1,6 +1,5 @@
 package com.dmadev.task7.config;
 
-
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;

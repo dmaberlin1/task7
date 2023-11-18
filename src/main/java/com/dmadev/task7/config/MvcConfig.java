@@ -16,6 +16,8 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
+import javax.swing.text.html.HTML;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.dmadev.task7")
@@ -38,12 +40,12 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
 
-    // Конфигурация для использования JSP в качестве шаблонов представления
+    // Конфигурация для использования HTML в качестве шаблонов представления
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/templates/");
-        resolver.setSuffix(".jsp");
+        resolver.setSuffix(".html");
         resolver.setViewClass(JstlView.class);
         return resolver;
     }

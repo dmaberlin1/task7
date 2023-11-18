@@ -2,12 +2,11 @@ package com.dmadev.task7.controllers;
 
 import com.dmadev.task7.models.User;
 import com.dmadev.task7.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -33,13 +32,35 @@ public class UsersController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editUserForm(@PathVariable(value = "id",required = true) long id, Model model, RedirectAttributes attributes){
-        userService.ad
+    public String editUserForm(@PathVariable(value = "id",required = true) int id, Model model, RedirectAttributes attributes){
+        User user = userService.readUser(id);
+        if(user==null){
+            attributes.addFlashAttribute("flashMessage","User are not exists!");
+            return "redirect:/users";
+        }
+        model.addAttribute("user",userService.readUser(id));
+        return "form";
     }
 
+    @PostMapping
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,RedirectAttributes attributes){
+        if(bindingResult.hasErrors()){
+            return "form";
+        }
+        userService.createOrUpdateUser(user);
+        attributes.addFlashAttribute("flashMessage","User "+user.getFirstName()+ " succesfully created!");
+        return "redirect:/users";
+    }
 
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam(value = "id",required = true,defaultValue = "")int id, RedirectAttributes attributes){
+        User user=userService.deleteUser(id);
 
-
+        attributes.addFlashAttribute("flashMessage",(user==null)
+                ? "User are not exists!"
+                : "User "+user.getFirstName()+ " successfully deleted");
+        return "redirect:/users";
+    }
 
 
 
