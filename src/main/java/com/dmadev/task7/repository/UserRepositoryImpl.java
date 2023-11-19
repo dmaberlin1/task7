@@ -1,11 +1,8 @@
-package com.dmadev.task7.repositories;
-
-import com.dmadev.task7.models.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.hibernate.annotations.processing.SQL;
+package com.dmadev.task7.repository;
+import com.dmadev.task7.model.User;
 import org.springframework.stereotype.Repository;
-
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

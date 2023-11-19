@@ -1,4 +1,4 @@
-package com.dmadev.task7.models;
+package com.dmadev.task7.model;
 
 public enum Gender {
     MALE("Male"),

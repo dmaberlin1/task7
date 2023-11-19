@@ -1,7 +1,5 @@
-package com.dmadev.task7.services;
-import com.dmadev.task7.models.User;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package com.dmadev.task7.service;
+import com.dmadev.task7.model.User;
 
 import java.util.List;
 

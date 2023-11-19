@@ -1,7 +1,7 @@
-package com.dmadev.task7.repositories;
+package com.dmadev.task7.repository;
 
 
-import com.dmadev.task7.models.User;
+import com.dmadev.task7.model.User;
 
 import java.util.List;
 
