@@ -19,12 +19,13 @@ public class AppInit implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
 
         // Создаем контекст приложения и регистрируем конфигурацию
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(AppConfig.class);
-        context.setConfigLocation(CONF_LOCATION);
+        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+        appContext.register(AppConfig.class);
+        appContext.register(MvcConfig.class);
+        appContext.setConfigLocation(CONF_LOCATION);
 
         // Регистрируем контекст приложения в контексте сервлетов
-        servletContext.addListener(new ContextLoaderListener(context));
+        servletContext.addListener(new ContextLoaderListener(appContext));
 
         // Настраиваем кодировку для фильтра
         FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter("UTF-8", true, true));
@@ -35,7 +36,7 @@ public class AppInit implements WebApplicationInitializer {
         hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Регистрируем диспетчер сервлетов
-        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
     }
