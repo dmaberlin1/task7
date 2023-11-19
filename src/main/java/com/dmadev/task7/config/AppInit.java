@@ -13,12 +13,15 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 
 public class AppInit implements WebApplicationInitializer {
+    private static final String CONF_LOCATION = "com.dmadev.task7.config";
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+
         // Создаем контекст приложения и регистрируем конфигурацию
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(AppConfig.class);
+        context.setConfigLocation(CONF_LOCATION);
 
         // Регистрируем контекст приложения в контексте сервлетов
         servletContext.addListener(new ContextLoaderListener(context));
